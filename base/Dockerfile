@@ -1,8 +1,8 @@
-FROM continuumio/miniconda3:latest
+FROM conda/miniconda3-centos7:latest
 
-RUN apt-get update \
-     && apt-get install -yq --no-install-recommends libarchive-dev \
-     && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN yum -y update \
+     && yum -y install libarchive-devel \
+     && yum clean all
 
 # XRootD + CA + VOMS + Coffea
 RUN conda install --yes --freeze-installed \
@@ -13,7 +13,7 @@ RUN conda install --yes --freeze-installed \
       dask_labextension \
       python==3.8.* \
       ca-policy-lcg \
-      xrootd==5.2.0 \
+      xrootd \
       "uproot>=4.0.8" \
       coffea==0.7.4 \
       lz4 python-xxhash zstandard \
